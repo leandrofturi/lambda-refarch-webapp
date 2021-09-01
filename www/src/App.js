@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Jumbotron, Row, Col, Alert, Button } from 'reactstrap';
 import axios from 'axios';
 
@@ -8,6 +8,19 @@ import logo from './valor.png';
 import config from './config';
 
 function App() {
+  const [alert, setAlert] = useState();
+  const [alertStyle, setAlertStyle] = useState('info');
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertDismissable, setAlertDismissable] = useState(false);
+  const [idToken, setIdToken] = useState('');
+  const [toDos, setToDos] = useState([]);
+
+  useEffect(() => {
+    getIdToken();
+    if (idToken.length > 0) {
+      getAllTodos();
+    }
+  }, [idToken]);
 
   axios.interceptors.response.use(response => {
     console.log('Response was received');
