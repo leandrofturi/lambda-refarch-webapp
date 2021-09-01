@@ -18,7 +18,6 @@ function App() {
   useEffect(() => {
     getIdToken();
     if (idToken.length > 0) {
-      getAllTodos();
     }
   }, [idToken]);
 
