@@ -7,6 +7,8 @@ import logo from './valor.png';
 
 import config from './config';
 
+
+
 function App() {
   const [alert, setAlert] = useState();
   const [alertStyle, setAlertStyle] = useState('info');
@@ -32,6 +34,28 @@ function App() {
   function onDismiss() {
     setAlertVisible(false);
   }
+
+  function updateAlert({ alert, style, visible, dismissable }) {
+    setAlert(alert ? alert : '');
+    setAlertStyle(style ? style : 'info');
+    setAlertVisible(visible);
+    setAlertDismissable(dismissable ? dismissable : null);
+  }
+
+  const clearCredentials = () => {
+    window.location.href = config.redirect_url;
+  }
+
+  const getIdToken = () => {
+    const hash = window.location.hash.substr(1);
+    const objects = hash.split("&");
+    objects.forEach(object => {
+      const keyVal = object.split("=");
+      if (keyVal[0] === "id_token") {
+        setIdToken(keyVal[1]);
+      }
+    });
+  };
 
   return (
     <div className="App">
